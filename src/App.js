@@ -1,25 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import './App.css';
 
 function App() {
+  const position = [18.4861, -69.98857]
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Map center={position} zoom={7}>
+      <TileLayer
+      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+    />
+    </Map>
   );
 }
 

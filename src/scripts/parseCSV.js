@@ -5,7 +5,7 @@ const FILES = [
 ];
 
 function handleComplete({ data: entries, errors }) {
-  if (errors) return [];
+  if (errors.length) return [];
   
   const parsedResults = [];
   for (const entry of entries) {

@@ -18,8 +18,10 @@ function MapView() {
   const context = useContext(GlobalState);
   const position = [18.4861, -69.98857];
 
+  console.log(context)
+
   useEffect(() => {
-    readRemoteFile(FILES[0],
+    readRemoteFile(MAP_FILE_URL[context.selectedList],
       {
         header: true,
         complete: function(res) {
@@ -28,17 +30,24 @@ function MapView() {
         }
       }
     );
-  }, []);
+  }, [context.selectedList]);
 
 
 
   return (
+    <>
+    <button onClick={(e) => {
+      e.preventDefault()
+      context.selectList('recovered');
+    }
+      }>change list</button>
     <Map center={position} zoom={4}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
       />
     </Map>
+    </>
   );
 }
 

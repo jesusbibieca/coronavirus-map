@@ -16,7 +16,7 @@ class GlobalStateProvider extends React.Component {
   }
 
   selectList(listName) {
-    this.setState({ selectList: listName });
+    this.setState({ selectedList: listName });
   }
 
   loadData(data) {

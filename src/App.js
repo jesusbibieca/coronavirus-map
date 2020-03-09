@@ -1,7 +1,10 @@
 import React from 'react';
-import { readRemoteFile } from 'react-papaparse'
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
-import './App.css';
+import { readRemoteFile } from 'react-papaparse';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Map from './Map';
+import InfoSection from './InfoSection';
 
 import { handleComplete, FILES } from './scripts/parseCSV';
 
@@ -12,7 +15,6 @@ const MAP_FILE_URL = {
 };
 
 function App() {
-  const position = [18.4861, -69.98857];
 
   readRemoteFile(FILES[0],
     {
@@ -23,12 +25,16 @@ function App() {
     });
 
   return (
-    <Map center={position} zoom={7}>
-      <TileLayer
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-    />
-    </Map>
+    <Grid container>
+      <Grid item spacing={2} xs={0} md={3}>
+        <Box display={{ xs: 'none', md: 'block' }} m={1}>
+          <InfoSection />
+        </Box>
+      </Grid>
+      <Grid item xs={12} md={9}>
+        <Map />
+      </Grid>
+    </Grid>
   );
 }
 

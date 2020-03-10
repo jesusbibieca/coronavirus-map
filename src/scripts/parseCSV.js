@@ -11,7 +11,16 @@ function handleComplete({ data: entries, errors }) {
   for (const entry of entries) {
     parsedResults.push(transform(entry));
   }
+  parsedResults.unshift(calculateTotalOcurrence(parsedResults));
   return parsedResults;
+}
+
+function calculateTotalOcurrence(entries) {
+  let count = 0;
+  for  (const entry of entries) {
+    count = count + parseInt(entry.reportedCount, 10);
+  }
+  return count;
 }
 
 function transform(entry) {

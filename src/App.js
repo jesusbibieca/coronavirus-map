@@ -10,12 +10,12 @@ function App() {
   return (
     <Grid container>
       <GlobalStateProvider>
-        <Grid item md={3}>
+        <Grid item md={4}>
           <Box display={{ xs: 'none', md: 'block' }} m={1}>
             <InfoSection />
           </Box>
         </Grid>
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={8}>
           <Map />
         </Grid>
       </GlobalStateProvider>

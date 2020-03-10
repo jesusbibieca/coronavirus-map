@@ -1,4 +1,4 @@
-import React, { useContext, useEffect }from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { readRemoteFile } from 'react-papaparse';
 import { handleComplete, FILES } from './scripts/parseCSV';
@@ -35,19 +35,12 @@ function MapView() {
 
 
   return (
-    <>
-    <button onClick={(e) => {
-      e.preventDefault()
-      context.selectList('recovered');
-    }
-      }>change list</button>
     <Map center={position} zoom={4}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
       />
     </Map>
-    </>
   );
 }
 

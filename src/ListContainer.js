@@ -17,10 +17,6 @@ function formatNumber(value) {
 function Lists() {
   const context = useContext(GlobalState);
   const { listData, selectedList, loaded } = context;
-  // const listData[0] = loaded ? listData.shift() : null;
-
-
-  console.log('testsss', listData)
 
   const sublistItems = [];
   if (loaded) {

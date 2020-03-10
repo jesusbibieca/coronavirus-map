@@ -41,8 +41,10 @@ function MapView() {
        {loaded && 
          listData.map((value, index) => {
            const {country, state, reportedCount, latitude, longitude } = value;
-           if (latitude && longitude) {
+           if (latitude && longitude && reportedCount > 0) {
              return <OccurrenceMarker key={state + index} popupData={{ country, state, reportedCount }} center={[parseFloat(latitude, 10), parseFloat(longitude, 10)]} radius={20} />;
+           } else {
+             return null;
            }
         })
        }

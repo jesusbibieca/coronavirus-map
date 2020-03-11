@@ -5,13 +5,10 @@ const FILES = [
 ];
 
 function handleComplete({ data: entries, errors }) {
-  // if (errors.length) return [];
-  
   const parsedResults = [];
   for (const entry of entries) {
     parsedResults.push(transform(entry));
   }
-  console.log(errors, 'calcu')
   parsedResults.unshift(calculateTotalOcurrence(parsedResults));
   return parsedResults.filter(Boolean);
 }

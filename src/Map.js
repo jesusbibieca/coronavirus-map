@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Map, CircleMarker, Popup, TileLayer, ZoomControl } from 'react-leaflet';
+import { Map, CircleMarker, Popup, TileLayer } from 'react-leaflet';
 import Search from "react-leaflet-search";
 import { readRemoteFile } from 'react-papaparse';
 import { handleComplete, FILES } from './scripts/parseCSV';
@@ -62,7 +62,6 @@ function MapView() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
       />
-      {/* <ZoomControl position="bottomleft" /> */}
       <Search 
         inputPlaceholder='Search city or country...'
         zoom={6}

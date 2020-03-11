@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Map, CircleMarker, Popup, TileLayer } from 'react-leaflet';
 import Search from "react-leaflet-search";
+import Paper from '@material-ui/core/Paper';
 import { readRemoteFile } from 'react-papaparse';
 import { handleComplete, FILES } from './scripts/parseCSV';
 
@@ -91,7 +92,11 @@ function MapView() {
 function OccurrenceMarker({center, radius, popupData }) {
   return (
     <CircleMarker center={center} color="red" radius={radius}>
-      <Popup>{`${popupData.country}`}</Popup>
+      <Popup>
+        {popupData.country} {popupData.country && popupData.state ? ` - ${popupData.state}` : popupData.state}
+        <br/>
+        {'Reports: ' + Intl.NumberFormat().format(popupData.reportedCount)}
+      </Popup>
     </CircleMarker>
   );
 }

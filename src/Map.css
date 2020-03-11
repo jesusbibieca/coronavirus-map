@@ -2,3 +2,18 @@
   height: 100vh;
   width: 100%;
 }
+
+.map-title {
+  display: none;
+}
+@media only screen and (max-width: 959px) {
+  .map-title {
+    display: block;
+    position: absolute;
+    z-index: 100000;
+    bottom: 3%;
+    right: 14%;
+    font-size: 28px;
+    font-family: Nanum Gothic Coding;
+  }
+}

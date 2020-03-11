@@ -9,10 +9,16 @@ class GlobalStateProvider extends React.Component {
     this.state = {
       loaded: false,
       selectedList: 'confirmed',
-      listData: null
+      listData: null,
+      center: [18.4861, -69.98857]
     };
     this.selectList = this.selectList.bind(this);
     this.loadData = this.loadData.bind(this);
+    this.setCenter = this.setCenter.bind(this);
+  }
+
+  setCenter(coords) {
+    this.setState({ center: coords });
   }
 
   selectList(listName) {
@@ -33,7 +39,8 @@ class GlobalStateProvider extends React.Component {
       <GlobalState.Provider value={{
         ...this.state,
         selectList: this.selectList,
-        loadData: this.loadData
+        loadData: this.loadData,
+        setCenter: this.setCenter
       }}> 
         { this.props.children }
       </GlobalState.Provider>

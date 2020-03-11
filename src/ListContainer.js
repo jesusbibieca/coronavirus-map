@@ -26,8 +26,8 @@ function Lists() {
   const sublistItems = [];
   if (loaded) {
     for (let i = 1; i < listData.length; i++) {
-      const {country, state, reportedCount } = listData[i];
-      sublistItems.push(<SublistItem key={state + i} country={country} state={state} reportedCount={formatNumber(reportedCount)} />);
+      const {country, state, reportedCount, longitude, latitude } = listData[i];
+      sublistItems.push(<SublistItem key={state + i} coords={[latitude, longitude]} country={country} state={state} reportedCount={formatNumber(reportedCount)} />);
     }
   }
 
@@ -60,14 +60,19 @@ function Lists() {
   );
 }
 
-function SublistItem({ country, state, reportedCount, selected = false }) {
+function SublistItem({ country, state, reportedCount, coords }) {
   const classes = useStyles();
+  const { setCenter } = useContext(GlobalState);
+
+  const handleSelectedList = () => {
+    setCenter(coords);
+  };
 
   return (
     <>
       <Paper className={classes.paper} variant="outlined">
-        <ListItem >
-          <ListItemText  primary={country} secondary={state} />
+        <ListItem button>
+          <ListItemText onClick={handleSelectedList} primary={country} secondary={state} />
           <div className={classes.number}>{reportedCount}</div>
           <ListItemIcon>
             <PinDropIcon fontSize='large' />

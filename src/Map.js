@@ -18,7 +18,7 @@ function MapView() {
 
   const context = useContext(GlobalState);
   const { listData, loaded, selectedList } = context;
-  const position = [18.4861, -69.98857];
+  const position = context.center;
   const [ zoomLevel, setZoomLevel ] = useState(4);
 
   const calculateReports = (data) => {

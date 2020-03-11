@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Map, CircleMarker, Popup, TileLayer } from 'react-leaflet';
 import { readRemoteFile } from 'react-papaparse';
 import { handleComplete, FILES } from './scripts/parseCSV';
@@ -18,8 +18,25 @@ function MapView() {
   const context = useContext(GlobalState);
   const { listData, loaded, selectedList } = context;
   const position = [18.4861, -69.98857];
+  const [ zoomLevel, setZoomLevel ] = useState(4);
 
-
+  const calculateReports = (data) => {
+    let min = Infinity;
+    let max = 0;
+    data.map((element) =>{
+      const count = Number(element.reportedCount);
+      if (count < min && count !== 0) {
+        min = count;
+      }
+      if (count > max) {
+        max = count;
+      }
+    });
+    return [min, max];
+  };
+  
+  const [ minReport, maxReport ] = loaded ? calculateReports(listData) : [];
+  
   useEffect(() => {
     readRemoteFile(MAP_FILE_URL[context.selectedList],
       {
@@ -32,8 +49,12 @@ function MapView() {
     );
   }, [selectedList]);
 
+  const handleZoom = (e) => {
+    setZoomLevel(e.target._zoom);
+  };
+
   return (
-    <Map center={position} zoom={4}>
+    <Map onZoomEnd={handleZoom} center={position} zoom={zoomLevel}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
@@ -42,7 +63,8 @@ function MapView() {
          listData.map((value, index) => {
            const {country, state, reportedCount, latitude, longitude } = value;
            if (latitude && longitude && reportedCount > 0) {
-             return <OccurrenceMarker key={state + index} popupData={{ country, state, reportedCount }} center={[parseFloat(latitude, 10), parseFloat(longitude, 10)]} radius={20} />;
+            const markerRadius = mapRange(reportedCount, minReport, maxReport, 10, 150);
+             return <OccurrenceMarker key={state + index} popupData={{ country, state, reportedCount }} center={[parseFloat(latitude, 10), parseFloat(longitude, 10)]} radius={markerRadius} />;
            } else {
              return null;
            }
@@ -59,6 +81,16 @@ function OccurrenceMarker({center, radius, popupData }) {
       <Popup>{`${popupData.country}`}</Popup>
     </CircleMarker>
   );
+}
+
+
+// linearly maps value from the range (a..b) to (c..d)
+// reference: https://github.com/processing/p5.js/blob/master/src/math/calculation.js#L459
+function mapRange (value, a, b, c, d) {
+  // first map value from (a..b) to (0..1)
+  value = (value - a) / (b - a);
+  // then map it from (0..1) to (c..d) and return it
+  return c + value * (d - c);
 }
 
 export default MapView;

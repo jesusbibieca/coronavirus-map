@@ -6,8 +6,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Paper from '@material-ui/core/Paper';
 import PinDropIcon from '@material-ui/icons/PinDrop';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { GlobalState } from './context/GlobalState';
+
+const useStyles = makeStyles(() => ({
+  paper: { backgroundColor: '#f6f6f6' },
+  number: { paddingRight: '20px', fontSize: '15px', fontWeight: '600' }
+}));
 
 function formatNumber(value) {
   return Intl.NumberFormat().format(value);
@@ -55,13 +61,14 @@ function Lists() {
 }
 
 function SublistItem({ country, state, reportedCount, selected = false }) {
+  const classes = useStyles();
+
   return (
     <>
-      <Paper style={{backgroundColor: '#f6f6f6'}} variant="outlined">
-      {/* <Paper color='secondary' variant="outlined"> */}
+      <Paper className={classes.paper} variant="outlined">
         <ListItem >
           <ListItemText  primary={country} secondary={state} />
-          <div>{reportedCount}</div>
+          <div className={classes.number}>{reportedCount}</div>
           <ListItemIcon>
             <PinDropIcon fontSize='large' />
           </ListItemIcon>

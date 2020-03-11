@@ -5,33 +5,38 @@ const FILES = [
 ];
 
 function handleComplete({ data: entries, errors }) {
-  if (errors.length) return [];
+  // if (errors.length) return [];
   
   const parsedResults = [];
   for (const entry of entries) {
     parsedResults.push(transform(entry));
   }
+  console.log(errors, 'calcu')
   parsedResults.unshift(calculateTotalOcurrence(parsedResults));
-  return parsedResults;
+  return parsedResults.filter(Boolean);
 }
 
 function calculateTotalOcurrence(entries) {
   let count = 0;
   for  (const entry of entries) {
-    count = count + parseInt(entry.reportedCount, 10);
+    if (entry && entry.reportedCount) {
+      count = count + parseInt(entry.reportedCount, 10);
+    }
   }
   return count;
 }
 
 function transform(entry) {
-  return {
-    state: entry['Province/State'],
-    country: entry['Country/Region'],
-    latitude: entry.Lat,
-    longitude: entry.Long,
-    reportedCount: getLastReportedNumber(entry),
-    lastReportDate: getLastReportedDate(entry)
-  };
+  if (entry.Lat && entry.Long) {
+    return {
+      state: entry['Province/State'],
+      country: entry['Country/Region'],
+      latitude: entry.Lat,
+      longitude: entry.Long,
+      reportedCount: getLastReportedNumber(entry),
+      lastReportDate: getLastReportedDate(entry)
+    };
+  }
 }
 
 function getLastReportedDate(entry) {

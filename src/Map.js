@@ -55,8 +55,13 @@ function MapView() {
     setZoomLevel(e.target._zoom);
   };
 
+  const getLocation = async () => {
+    await navigator.geolocation.getCurrentPosition(console.log);
+  };
+
   return (
   <>
+    <button onClick={getLocation}></button>
     <div className='map-title'>Tracking CoronaVirus</div>
     <Map onZoomEnd={handleZoom} center={position} zoom={zoomLevel}>
       <TileLayer
@@ -65,7 +70,7 @@ function MapView() {
       />
       <Search 
         inputPlaceholder='Search city or country...'
-        zoom={6}
+        zoom={8}
         position='topright'
         showMarker={false}
         showPopup={false}

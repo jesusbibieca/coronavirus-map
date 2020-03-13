@@ -12,7 +12,9 @@ import { GlobalState } from './context/GlobalState';
 
 const useStyles = makeStyles(() => ({
   paper: { backgroundColor: '#f6f6f6' },
-  number: { paddingRight: '20px', fontSize: '15px', fontWeight: '600' }
+  number: { paddingRight: '20px', fontSize: '15px', fontWeight: '600' },
+  listItem: { color: '#1f4a7a' },
+  icon: { color: '#90d2d4' }
 }));
 
 function formatNumber(value) {
@@ -22,6 +24,7 @@ function formatNumber(value) {
 function Lists() {
   const context = useContext(GlobalState);
   const { listData, selectedList, loaded } = context;
+  const classes = useStyles();
 
   const sublistItems = [];
   if (loaded) {
@@ -39,14 +42,15 @@ function Lists() {
     <>
     <List component="div">
       <Box display="flex" flexDirection="row">
+
         <ListItem selected={selectedList === 'confirmed'} onClick={() => handleListChange('confirmed')} button>
-          <ListItemText primary="Confirmed" secondary={selectedList === 'confirmed' && loaded && !isNaN(listData[0]) ? formatNumber(listData[0]) : null}/>
+          <ListItemText className={classes.listItem} primary="Confirmed" secondary={selectedList === 'confirmed' && loaded && !isNaN(listData[0]) ? formatNumber(listData[0]) : null}/>
         </ListItem>
         <ListItem selected={selectedList === 'deaths'} onClick={() => handleListChange('deaths')} button>
-          <ListItemText primary="Deaths" secondary={selectedList === 'deaths' && loaded && !isNaN(listData[0]) ? formatNumber(listData[0]) : null} />
+          <ListItemText className={classes.listItem} primary="Deaths" secondary={selectedList === 'deaths' && loaded && !isNaN(listData[0]) ? formatNumber(listData[0]) : null} />
         </ListItem>
         <ListItem selected={selectedList === 'recovered'} onClick={() => handleListChange('recovered')} button>
-          <ListItemText primary="Recovered" secondary={selectedList === 'recovered' && loaded && !isNaN(listData[0]) ? formatNumber(listData[0]) : null} />
+          <ListItemText className={classes.listItem} primary="Recovered" secondary={selectedList === 'recovered' && loaded && !isNaN(listData[0]) ? formatNumber(listData[0]) : null} />
         </ListItem>
       </Box>
     </List>
@@ -72,10 +76,10 @@ function SublistItem({ country, state, reportedCount, coords }) {
     <>
       <Paper className={classes.paper} variant="outlined">
         <ListItem button>
-          <ListItemText onClick={handleSelectedList} primary={country} secondary={state} />
+          <ListItemText className={classes.listItem} onClick={handleSelectedList} primary={country} secondary={state} />
           <div className={classes.number}>{reportedCount}</div>
           <ListItemIcon>
-            <PinDropIcon fontSize='large' />
+            <PinDropIcon className={classes.icon} fontSize='large' />
           </ListItemIcon>
         </ListItem>
       </Paper>

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Map, CircleMarker, Popup, TileLayer } from 'react-leaflet';
 import Search from "react-leaflet-search";
-import Paper from '@material-ui/core/Paper';
 import { readRemoteFile } from 'react-papaparse';
 import { handleComplete, FILES } from './scripts/parseCSV';
 
@@ -25,7 +24,7 @@ function MapView() {
   const calculateReports = (data) => {
     let min = Infinity;
     let max = 0;
-    data.map((element) =>{
+    data.map((element) => {
       const count = Number(element.reportedCount);
       if (count < min && count !== 0) {
         min = count;
@@ -55,13 +54,22 @@ function MapView() {
     setZoomLevel(e.target._zoom);
   };
 
-  const getLocation = async () => {
-    await navigator.geolocation.getCurrentPosition(console.log);
+  const getLocation = () => {
+    function success(data) {
+      const { coords } = data;
+      context.setCenter([coords.latitude, coords.longitude]);
+      setZoomLevel(8);
+    }
+    
+    navigator.geolocation.getCurrentPosition(success, console.error);
   };
+
+  useEffect(() => {
+    console.log(getLocation());
+  }, []);
 
   return (
   <>
-    <button onClick={getLocation}></button>
     <div className='map-title'>Tracking CoronaVirus</div>
     <Map onZoomEnd={handleZoom} center={position} zoom={zoomLevel}>
       <TileLayer

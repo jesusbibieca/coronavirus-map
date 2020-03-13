@@ -12,13 +12,24 @@ const useStyles = makeStyles(() => ({
   },
   hed: {
     fontSize: '32px',
-    fontFamily: 'Nanum Gothic Coding'
+    fontFamily: 'Nanum Gothic Coding',
+    color: '#1f4a7a'
   },
   container: {
     padding: '10px'
   },
   dek: {
-    fontFamily: 'Nanum Myeongjo'
+    fontFamily: 'Nanum Myeongjo',
+    color: '#1f4a7a'
+  },
+  brand: {
+    fontFamily: 'Nanum Myeongjo',
+    color: '#1f4a7a',
+    fontSize: '12px'
+  },
+  brandLink: {
+    textDecoration: 'none',
+    color:'#90d2d4'
   }
 }));
 
@@ -29,7 +40,10 @@ function InfoSection() {
       <aside className={classes.sidebar}>
         <div className={classes.container}>
           <h1 className={classes.hed}>Tracking Coronavirus COVID-19</h1>
-          <p className={classes.dek}>The first case of the new Coronavirus COVID-19 was recorded on 31 December in Wuhan, China (WHO). Since then, over 100,000 confirmed cases have been recorded worldwide. This visualization shows the near real-time status based on data from the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University and DXY. Data currently available on the following zoom levels: City level - US, Canada and Australia; Province level - China; Country level - other countries.</p>
+          <p className={classes.dek}>
+            The first case of the new Coronavirus COVID-19 was recorded on 31 December in Wuhan, China (WHO). Since then, over 100,000 confirmed cases have been recorded worldwide. This visualization shows the near real-time status based on data from the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University and DXY. Data currently available on the following zoom levels: City level - US, Canada and Australia; Province level - China; Country level - other countries.
+          </p>
+          <p className={classes.brand}>Made by <a className={classes.brandLink} href="http://www.flexsible.com" target="_blank" rel="noopener noreferrer">flexsible.com</a></p>
         </div>
           <Lists />
       </aside>

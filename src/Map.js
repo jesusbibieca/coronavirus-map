@@ -65,7 +65,7 @@ function MapView() {
   };
 
   useEffect(() => {
-    console.log(getLocation());
+    getLocation();
   }, []);
 
   return (

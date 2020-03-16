@@ -6,6 +6,8 @@ import InfoSection from './InfoSection';
 
 import { GlobalStateProvider } from './context/GlobalState';
 
+import './assets/scss/DefaultTheme.scss';
+
 function App() {
   return (
     <Grid container>

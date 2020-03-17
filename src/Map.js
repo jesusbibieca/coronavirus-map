@@ -30,9 +30,8 @@ const locateOptions = {
 function MapView() {
 
   const context = useContext(GlobalState);
-  const { listData, loaded } = context;
+  const { listData, loaded, zoomLevel, setZoomLevel } = context;
   const position = context.center;
-  const [ zoomLevel, setZoomLevel ] = useState(5);
 
   const calculateReports = (data) => {
     let min = Infinity;
@@ -85,14 +84,11 @@ function MapView() {
     context.hasLoaded();
   }, []);
   
-  const handleZoom = (e) => {
-    setZoomLevel(e.target._zoom);
-  };
 
   return (
   <>
     <div className='map-title'>Tracking CoronaVirus</div>
-    <Map onZoomEnd={handleZoom} center={position} zoom={zoomLevel}>
+    <Map onZoomEnd={(e) => setZoomLevel(e.target._zoom)} center={position} zoom={zoomLevel} useFlyTo>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"

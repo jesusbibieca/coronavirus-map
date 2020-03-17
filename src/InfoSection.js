@@ -11,20 +11,20 @@ const useStyles = makeStyles(() => ({
     bottom: 0,
   },
   hed: {
-    fontSize: '32px',
+    fontSize: '38px',
     fontFamily: 'Nanum Gothic Coding',
-    color: '#1f4a7a'
+    color: 'rgb(35, 40, 51)'
   },
   container: {
     padding: '10px'
   },
   dek: {
     fontFamily: 'Nanum Myeongjo',
-    color: '#1f4a7a'
+    color: 'rgb(35, 40, 51)'
   },
   brand: {
     fontFamily: 'Nanum Myeongjo',
-    color: '#1f4a7a',
+    color: 'rgb(35, 40, 51)',
     fontSize: '12px'
   },
   brandLink: {

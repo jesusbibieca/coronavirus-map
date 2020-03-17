@@ -14,7 +14,8 @@ class GlobalStateProvider extends React.Component {
         deaths: [],
         recovered: []
       },
-      center: [37.767554, -99.861025]
+      center: [37.767554, -99.861025],
+      zoomLevel: 5,
     };
 
     this.selectList = this.selectList.bind(this);
@@ -23,6 +24,8 @@ class GlobalStateProvider extends React.Component {
     this.loadDeath = this.loadDeath.bind(this);
     this.hasLoaded = this.hasLoaded.bind(this);
     this.setCenter = this.setCenter.bind(this);
+    this.setZoomLevel = this.setZoomLevel.bind(this);
+
   }
 
   setCenter(coords) {
@@ -57,6 +60,12 @@ class GlobalStateProvider extends React.Component {
     this.setState({loaded: true});
   }
 
+  setZoomLevel(value) {
+    this.setState({
+      zoomLevel: value
+    });
+  }
+
   render() {
     return (
       <GlobalState.Provider value={{
@@ -66,7 +75,8 @@ class GlobalStateProvider extends React.Component {
         loadDeath: this.loadDeath,
         loadRecovered: this.loadRecovered,
         hasLoaded: this.hasLoaded,
-        setCenter: this.setCenter
+        setCenter: this.setCenter,
+        setZoomLevel: this.setZoomLevel,
       }}> 
         { this.props.children }
       </GlobalState.Provider>

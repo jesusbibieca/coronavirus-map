@@ -41,12 +41,24 @@ function formattedSecondary(data, styles) {
   return (<span className={styles.listItemSecondary}>{data}</span>);
 }
 
+function sortData(payload) {
+  payload.sort((a, b) => {
+    if (Object.keys(a)[0] === 'US') 
+    return -1;
+    if (Object.keys(b)[0] !== 'US') {
+      return 1;
+    }
+    return 0;
+  });
+}
+
 function Lists() {
   const context = useContext(GlobalState);
   const { listData, selectedList, loaded } = context;
   const classes = useStyles();
   const [_, ...data] = sumReportedCountByCountry(groupByCountry(listData[selectedList]));
-  console.log(data);
+
+  sortData(data);
 
   const handleListChange = (listName) => {
     context.selectList(listName);

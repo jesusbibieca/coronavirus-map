@@ -85,27 +85,9 @@ function MapView() {
     context.hasLoaded();
   }, []);
   
-  console.log(context.listData);
-
-  
-
   const handleZoom = (e) => {
     setZoomLevel(e.target._zoom);
   };
-
-  // const getLocation = () => {
-  //   function success(data) {
-  //     const { coords } = data;
-  //     context.setCenter([coords.latitude, coords.longitude]);
-  //     setZoomLevel(8);
-  //   }
-    
-  //   navigator.geolocation.getCurrentPosition(success, console.error);
-  // };
-
-  // useEffect(() => {
-  //   getLocation();
-  // }, []);
 
   return (
   <>

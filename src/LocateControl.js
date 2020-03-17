@@ -3,21 +3,6 @@ import { withLeaflet, MapControl } from 'react-leaflet';
 import 'leaflet.locatecontrol';
 import ReactDOMServer from 'react-dom/server';
 
-// class LocateControl extends MapControl {
-//   createLeafletElement(props) {
-//     const {
-//       leaflet: { map },
-//       ...options
-//     } = props;
-
-//     const lc = L.control.locate(options).addTo(map);
-//     return lc;
-//   }
-//   render() {
-//     return (this.props.children);
-//   }
-// }
-
 class LocateControl extends MapControl {
   createLeafletElement(props) {
     const {
@@ -26,7 +11,6 @@ class LocateControl extends MapControl {
     } = props;
 
     if (this.props.children !== undefined && options.createButtonCallback === undefined) {
-      console.log(options, 'nekaaaa')
       options.createButtonCallback = (container, options) => {
         let link = L.DomUtil.create('a', 'leaflet-bar-part leaflet-bar-part-single', container);
         link.role = 'button';

@@ -19,7 +19,7 @@ function MapView() {
   const context = useContext(GlobalState);
   const { listData, loaded, selectedList } = context;
   const position = context.center;
-  const [ zoomLevel, setZoomLevel ] = useState(4);
+  const [ zoomLevel, setZoomLevel ] = useState(5);
 
   const calculateReports = (data) => {
     let min = Infinity;
@@ -36,19 +36,45 @@ function MapView() {
     return [min, max];
   };
   
-  const [ minReport, maxReport ] = loaded ? calculateReports(listData) : [];
+  const [ minReport, maxReport ] = loaded ? calculateReports(listData[context.selectedList]) : [];
   
   useEffect(() => {
-    readRemoteFile(MAP_FILE_URL[context.selectedList],
+    readRemoteFile(MAP_FILE_URL['confirmed'],
       {
         header: true,
         complete: function(res) {
           const results = handleComplete(res);
-          context.loadData(results);
+          context.loadConfirmed(results);
         }
       }
     );
-  }, [selectedList]);
+
+    readRemoteFile(MAP_FILE_URL['deaths'],
+      {
+        header: true,
+        complete: function(res) {
+          const results = handleComplete(res);
+          context.loadDeath(results);
+        }
+      }
+    );
+
+    readRemoteFile(MAP_FILE_URL['recovered'],
+      {
+        header: true,
+        complete: function(res) {
+          const results = handleComplete(res);
+          context.loadRecovered(results);
+        }
+      }
+    );
+
+    context.hasLoaded();
+  }, []);
+  
+  console.log(context.listData);
+
+  
 
   const handleZoom = (e) => {
     setZoomLevel(e.target._zoom);
@@ -85,8 +111,8 @@ function MapView() {
         openSearchOnLoad={true}
         closeResultsOnClick={true}
       />
-       {loaded && 
-         listData.map((value, index) => {
+       {loaded && listData[context.selectedList] &&
+         listData[context.selectedList].map((value, index) => {
            const {country, state, reportedCount, latitude, longitude } = value;
            if (latitude && longitude && reportedCount > 0) {
             const markerRadius = mapRange(reportedCount, minReport, maxReport, 10, 150);

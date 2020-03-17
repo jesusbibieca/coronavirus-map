@@ -27,7 +27,7 @@ class LocateControl extends MapControl {
     if (options.startDirectly)
       setTimeout(() => {
         lc.start();
-      }, 1000);
+      }, 500);
 
     return lc;
   }

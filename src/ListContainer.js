@@ -28,8 +28,8 @@ function Lists() {
 
   const sublistItems = [];
   if (loaded) {
-    for (let i = 1; i < listData.length; i++) {
-      const {country, state, reportedCount, longitude, latitude } = listData[i];
+    for (let i = 1; i < listData[selectedList].length; i++) {
+      const {country, state, reportedCount, longitude, latitude } = listData[selectedList][i];
       sublistItems.push(<SublistItem key={state + i} coords={[latitude, longitude]} country={country} state={state} reportedCount={formatNumber(reportedCount)} />);
     }
   }
@@ -44,13 +44,13 @@ function Lists() {
       <Box display="flex" flexDirection="row">
 
         <ListItem selected={selectedList === 'confirmed'} onClick={() => handleListChange('confirmed')} button>
-          <ListItemText className={classes.listItem} primary="Confirmed" secondary={selectedList === 'confirmed' && loaded && !isNaN(listData[0]) ? formatNumber(listData[0]) : null}/>
+          <ListItemText className={classes.listItem} primary="Confirmed" secondary={loaded && !isNaN(listData.confirmed[0]) ? formatNumber(listData.confirmed[0]) : null}/>
         </ListItem>
         <ListItem selected={selectedList === 'deaths'} onClick={() => handleListChange('deaths')} button>
-          <ListItemText className={classes.listItem} primary="Deaths" secondary={selectedList === 'deaths' && loaded && !isNaN(listData[0]) ? formatNumber(listData[0]) : null} />
+          <ListItemText className={classes.listItem} primary="Deaths" secondary={loaded && !isNaN(listData.deaths[0]) ? formatNumber(listData.deaths[0]) : null} />
         </ListItem>
         <ListItem selected={selectedList === 'recovered'} onClick={() => handleListChange('recovered')} button>
-          <ListItemText className={classes.listItem} primary="Recovered" secondary={selectedList === 'recovered' && loaded && !isNaN(listData[0]) ? formatNumber(listData[0]) : null} />
+          <ListItemText className={classes.listItem} primary="Recovered" secondary={loaded && !isNaN(listData.recovered[0]) ? formatNumber(listData.recovered[0]) : null} />
         </ListItem>
       </Box>
     </List>

@@ -9,11 +9,19 @@ class GlobalStateProvider extends React.Component {
     this.state = {
       loaded: false,
       selectedList: 'confirmed',
-      listData: null,
-      center: [18.4861, -69.98857]
+      listData: { 
+        confirmed: [],
+        deaths: [],
+        recovered: []
+      },
+      center: [37.767554, -99.861025]
     };
+
     this.selectList = this.selectList.bind(this);
-    this.loadData = this.loadData.bind(this);
+    this.loadConfirmed = this.loadConfirmed.bind(this);
+    this.loadRecovered = this.loadRecovered.bind(this);
+    this.loadDeath = this.loadDeath.bind(this);
+    this.hasLoaded = this.hasLoaded.bind(this);
     this.setCenter = this.setCenter.bind(this);
   }
 
@@ -23,15 +31,30 @@ class GlobalStateProvider extends React.Component {
 
   selectList(listName) {
     if ( listName !== this.state.selectedList ) {
-      this.setState({ selectedList: listName, loaded: false });
+      this.setState({ selectedList: listName });
     }
   }
 
-  loadData(data) {
-    this.setState({
-      listData: data,
-      loaded: true
-    });
+  loadConfirmed(confirmed) {
+    this.setState((prevState) => ({
+      listData: { ...prevState.listData, confirmed }
+    }));
+  }
+
+  loadDeath(deaths) {
+    this.setState((prevState) => ({
+      listData: { ...prevState.listData, deaths }
+    }));
+  }
+
+  loadRecovered(recovered) {
+    this.setState((prevState) => ({
+      listData: { ...prevState.listData, recovered }
+    }));
+  }
+
+  hasLoaded() {
+    this.setState({loaded: true});
   }
 
   render() {
@@ -39,7 +62,10 @@ class GlobalStateProvider extends React.Component {
       <GlobalState.Provider value={{
         ...this.state,
         selectList: this.selectList,
-        loadData: this.loadData,
+        loadConfirmed: this.loadConfirmed,
+        loadDeath: this.loadDeath,
+        loadRecovered: this.loadRecovered,
+        hasLoaded: this.hasLoaded,
         setCenter: this.setCenter
       }}> 
         { this.props.children }
